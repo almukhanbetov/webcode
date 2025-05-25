@@ -6,7 +6,7 @@ const Leftbar = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:8080/api/categories/tree")
+    axios.get("http://89.35.124.200:8080/api/categories/tree")
       .then(res => setCategories(res.data))
       .catch(err => console.error("Ошибка при загрузке категорий:", err));
   }, []);

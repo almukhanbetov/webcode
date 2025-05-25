@@ -9,7 +9,7 @@ const CategoryView = () => {
 
   useEffect(() => {
     // 1. Загружаем дерево, чтобы получить имя категории
-    axios.get("http://localhost:8080/api/categories/tree")
+    axios.get("http://89.35.124.200:8080/api/categories/tree")
       .then(res => {
         const findCategory = (cats) => {
           for (let c of cats) {
@@ -25,7 +25,7 @@ const CategoryView = () => {
       });
 
     // 2. Загружаем курсы и услуги
-    axios.get(`http://localhost:8080/api/categories/${id}/details`)
+    axios.get(`http://89.35.124.200:8080/api/categories/${id}/details`)
       .then(res => setDetails(res.data))
       .catch(err => console.error("Ошибка загрузки деталей:", err));
   }, [id]);

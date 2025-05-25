@@ -7,7 +7,7 @@ const CreateCategoryForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8080/api/categories", form);
+      await axios.post("http://89.35.124.200:8080/api/categories", form);
       alert("Категория добавлена ✅");
     } catch (error) {
       alert("Ошибка при добавлении 😢");
