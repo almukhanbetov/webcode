@@ -1,0 +1,35 @@
+name: 🚀 VPS Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy to VPS
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup SSH key
+      uses: webfactory/ssh-agent@v0.8.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Copy project to VPS
+      run: |
+        rsync -avz --delete \
+          -e "ssh -o StrictHostKeyChecking=no" \
+          ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/webcode
+
+    - name: Run docker-compose up on VPS
+      run: |
+        ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+          cd ~/webcode
+          docker-compose down
+          docker-compose pull
+          docker-compose up -d --build
+        EOF
